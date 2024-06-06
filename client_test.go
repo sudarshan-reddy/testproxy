@@ -42,7 +42,7 @@ func TestGrpcNoProxy(t *testing.T) {
 
 	// Without custom dialer: The test should fail as the proxy will be used
 	t.Run("without custom dialer", func(t *testing.T) {
-		conn, err := grpc.Dial(grpcAddr, grpc.WithInsecure())
+		conn, err := grpc.NewClient(grpcAddr, grpc.WithInsecure())
 		if err != nil {
 			t.Fatalf("failed to dial: %v", err)
 		}
@@ -86,7 +86,7 @@ func TestGrpcNoProxy(t *testing.T) {
 			return net.Dial("tcp", proxy.Host)
 		}
 
-		conn, err := grpc.Dial(grpcAddr, grpc.WithContextDialer(customDialer), grpc.WithInsecure())
+		conn, err := grpc.NewClient(grpcAddr, grpc.WithContextDialer(customDialer), grpc.WithInsecure())
 		if err != nil {
 			t.Fatalf("failed to dial: %v", err)
 		}
